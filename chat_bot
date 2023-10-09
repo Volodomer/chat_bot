@@ -1,0 +1,58 @@
+import pyjokes
+import random
+from colorama import Style, Fore, Back
+from termcolor import colored
+from rich import print
+
+
+def main():
+    print(Fore.RED + 'Hi! Make your request from our menu. I can tell some joke '
+                      'or play some game with you.')
+    print(Style.RESET_ALL)
+    while True:
+        answer = input("What will you select?\n").lower()
+        if 'joke' in answer:
+            print('Here is the best known joke:')
+            print(Fore.RED + Back.BLUE + pyjokes.get_joke())
+            print(Style.RESET_ALL, end='')
+            print(':smile')
+        elif 'game' in answer:
+            rock_paper_scissors()
+        elif ('exit' in answer) or ('quit' in answer) or ('stop' in answer):
+            print("It's a pity to say you \"Good bye!\"")
+            break
+        else:
+            print(colored('Your request is not defined. Please, try it again or press QUIT.', 'yellow'))
+
+
+def rock_paper_scissors():
+    print(Fore.RED + Back.BLUE + "Let's play Rock-Paper-Scissors!")
+    print(Style.RESET_ALL, end='')
+    FIGURES = {'1': 'rock', '2': 'paper', '3': 'scissors'}
+    while True:
+        bot_figure = random.choice(list(FIGURES.values()))
+        while True:
+            choice = input('Choose the figure:\n\t1. Rock\n\t2. Paper\n\t3. Scissors\n>>')
+            if choice in list(FIGURES.keys()):
+                player_figure = FIGURES[choice]
+                break
+            else:
+                print('Please make your choice: 1, 2 or 3')
+        print("Player's figure is: " + player_figure)
+        print("Bot's figure is: " + bot_figure)
+        if player_figure == bot_figure:
+            print("It's a draw!")
+        elif (player_figure == 'rock' and bot_figure == 'scissors') or (player_figure == 'scissors' and bot_figure == 'paper') or \
+                (player_figure == 'paper' and bot_figure == 'rock'):
+            print('You are winner!')
+        else:
+            print('You are loser!')
+        print('----------------------------------------')
+        once_more = input("Do you want to play once more? (type 'No' if you don't)\n")
+        if once_more == 'No':
+            break
+        print('----------------------------------------')
+
+
+if __name__ == '__main__':
+    main()
